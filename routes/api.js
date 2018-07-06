@@ -5,7 +5,12 @@ const Tech = require('../models/technology');
 
 // Get a list of technologies from the db
 router.get('/techs', function(req,res,next){
-    res.send({type:'GET'});
+
+    Tech.find({category:req.query.category,subcategory:req.query.subcategory}).then(function(techs){
+        res.send(techs);
+    });
+
+    console.log('GET');
 });
 
 // Post a new tool to the db
@@ -16,16 +21,27 @@ router.post('/techs', function(req,res,next){
         res.send(tech);
     }).catch(next);                  
 
+    console.log('POST');
 });
 
 // Put (or update) a tool in the db
 router.put('/techs/:id', function(req,res,next){
-    res.send({type:'PUT'});
+    Tech.findByIdAndUpdate({_id:req.params.id},req.body).then(function(){
+        Tech.findOne({_id:req.params.id}).then(function(tech){
+            res.send(tech);
+        });
+    });
+    
+    console.log('PUT');
 });
 
 // Delete a tool from the db
 router.delete('/techs/:id', function(req,res,next){
-    res.send({type:'DELETE'});
+    Tech.findByIdAndRemove({_id:req.params.id}).then(function(tech){
+        res.send(tech);
+    });
+
+    console.log('DELETE');
 });
 
 module.exports = router;

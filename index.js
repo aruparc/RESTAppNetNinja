@@ -24,5 +24,5 @@ app.use(function(err,req,res,next){
 
 // Listen for requests -- it will either listen for process.env.port (ie. heroku, any other hosting port) or for a localhost port
 app.listen(process.env.port || 4000, function(){
-    console.log('now listening for requests');
+    console.log('now listening for requests...');
 });
